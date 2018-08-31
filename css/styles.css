@@ -76,6 +76,7 @@ nav h1 a {
     font-size: 18px;
     margin: 0;
     width: 100%; /*calc(50% - 80px);*/
+    max-width: 1177px;
 }
 
 /* Display list items side by side */
@@ -226,16 +227,20 @@ nav h1 a {
   top: 80px;
   width: 50%; */
 } 
+
 .inside #map {
   background-color: #ccc;
   height: 100%;
   width: 100%;
 }
+
 .inside #footer {
   bottom: 0;
-  position: absolute;
+  position: absolute; 
   width: 100%;
+  max-width: 1150px;
 }
+
 #restaurant-name {
   color: #f18200;
   font-family: Arial,sans-serif;
