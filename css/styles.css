@@ -137,7 +137,11 @@ nav h1 a {
 }
 
 .filter-label {
-  display: none;
+  visibility: hidden;
+  padding: 0;
+  margin: 0;
+  width: 1px;
+  height: 1px;
 }
 
 /* ====================== Restaurant Listing ====================== */
@@ -250,7 +254,8 @@ nav h1 a {
   margin: 0;
 }
 #restaurant-address {
-  font-size: 12pt;
+  font-size: 18px;
+  font-weight: 600;
   margin: 10px 0px;
   padding-left: 8px;
 }
@@ -305,4 +310,11 @@ nav h1 a {
 #restaurant-hours td {
   color: #666;
   padding-left: 8px;
+}
+.restaurant-info-label{
+  visibility: hidden;
+  padding: 0;
+  margin: 0;
+  width: 1px;
+  height: 1px;
 }
