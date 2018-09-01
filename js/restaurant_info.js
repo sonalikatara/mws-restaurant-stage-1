@@ -95,7 +95,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   /* end responsive images additions */
   image.src = imageurlMedium;
   image.srcset = `${imageurlMedium} 500w, ${imageurlLarge} 800w`;
-  image.alt = restaurant.name;
+  image.alt = "Image of " + restaurant.name;
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
