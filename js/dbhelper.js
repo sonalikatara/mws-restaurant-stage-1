@@ -1,4 +1,24 @@
 /**
+ * Create an IDB
+ * */
+//check for support
+/*
+if (!('indexedDB' in window)) {
+  console.log('This browser doesn\'t support IndexedDB');
+} else {
+  var dbPromise = idb.open('mws-db0', 0, function(upgradeDb) {
+    switch (upgradeDb.oldVersion) {
+      case 0:
+        upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
+      case 1:
+        var reviewStore = upgradeDb.transaction.objectStore('review');
+        revoewStore.createIndex('id', 'id'); 
+    }
+  });
+}
+*/
+
+/**
  * Common database helper functions.
  */
 class DBHelper {
@@ -9,7 +29,7 @@ class DBHelper {
    */
   static get DATABASE_URL() {
     const port = 1337 // Change this to your server port
-    console.log("fetcjhing data");
+    //console.log("fetching data");
     return `http://localhost:${port}/restaurants`;//http://localhost:1337/restaurants
 
   }
