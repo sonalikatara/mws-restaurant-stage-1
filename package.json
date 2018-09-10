@@ -10,10 +10,12 @@
   "author": "Sonali Shukla",
   "license": "MIT",
   "homepage": "https://github.com/sonalikatara/mws-restaurant-stage-1#readme",
-  "dependencies": {},
+  "dependencies": {
+    "idb": "^2.1.3"
+  },
   "devDependencies": {
     "del": "^3.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-cache": "^1.0.2",
     "gulp-clean-css": "^3.10.0",
