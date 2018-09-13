@@ -1,25 +1,30 @@
 # Mobile Web Specialist Certification Course
 ---
-#### Restaurant Reviews: Stage 2
+## Restaurant Reviews: Stage 2
 
 For the **Restaurant Reviews** projects
 
 I have used server data instead of local memory by pulling all of the data from the server instead, and using the response data to generate the restaurant information on the main page and the detail page.
 
-I used IndexedDB to cache JSON responses in key : value format 
+#### I used IndexedDB to cache JSON responses in key : value format  
 
 ![Indexed DB](./screenshots/indexdb.png)
 
-Also optimized the file using gulp. The optimized code is stored in the **dist** folder. 
+#### Also optimized the file using gulp. The optimized code is stored in the **dist** folder. 
 
 ![Lighthouse results](./screenshots/lighthouse.png)
 
+
 Lighthouse measures performance as :
+
 Progressive Web App score at 90 or better.
+
 Performance score  at 70 or better.
+
 Accessibility score at 90 or better.
 
-#### Restaurant Reviews: Stage 1
+
+## Restaurant Reviews: Stage 1
 
 For the **Restaurant Reviews** projects, I converted a static webpage to a mobile-ready web application. 
 
