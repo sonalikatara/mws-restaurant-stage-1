@@ -2,6 +2,8 @@
 "short_name": "Restaurants",
   "name": "Udacity Restaurant Reviews Project for MWS ND",
   "icons": [
+    { "src": "img/appicon.svg", "type": "image/svg", "sizes": "48x48" },
+    { "src": "img/appicon.svg", "type": "image/svg", "sizes": "96x96" },
     { "src": "img/appicon.svg", "type": "image/svg", "sizes": "192x192" },
     { "src": "img/appicon.svg", "type": "image/svg", "sizes": "512x512" }
   ],
