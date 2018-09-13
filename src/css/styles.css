@@ -12,6 +12,7 @@ body {
 	margin: 0 auto;
   position:relative;
   max-width: 1200px;
+  margin: 0 auto;
 }
 ul, li {
 	font-family: Arial, Helvetica, sans-serif;

@@ -5,15 +5,9 @@
 // Load plugins
 const gulp = require('gulp'),
     htmlmin = require('gulp-htmlmin'),
-    cleancss = require('gulp-clean-css')
-   // sass = require('gulp-ruby-sass'),
-   // autoprefixer = require('gulp-autoprefixer'),
-   // cssnano = require('gulp-cssnano'),
-  //  eslint = require('gulp-eslint'),
+    cleancss = require('gulp-clean-css'),
     uglify = require('gulp-uglify-es').default,
     imagemin = require('gulp-imagemin'),
-   // rename = require('gulp-rename'),
-    //concat = require('gulp-concat'),
     notify = require('gulp-notify'),
     cache = require('gulp-cache'),
     livereload = require('gulp-livereload'),
@@ -59,7 +53,7 @@ gulp.task('manifest', function() {
 // Images
 gulp.task('images', function() {
     return gulp.src('src/img/**/*')
-      .pipe(cache(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true })))
+      .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
       .pipe(gulp.dest('dist/img'))
       .pipe(notify({ message: 'Images task complete' }));
   });
