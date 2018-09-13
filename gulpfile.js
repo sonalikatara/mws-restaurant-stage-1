@@ -52,10 +52,10 @@ gulp.task('scripts', function() {
 //manifest.json
 gulp.task('manifest', function() {
   return gulp.src('src/manifest.json')   
-    .pipe(uglify())
     .pipe(gulp.dest('dist'))
     .pipe(notify({ message: 'Manifest task complete' }));
 });
+
 // Images
 gulp.task('images', function() {
     return gulp.src('src/img/**/*')
@@ -66,7 +66,7 @@ gulp.task('images', function() {
 
 // Clean
 gulp.task('clean', function() {
-    return del(['dist/*.html','dist/css', 'dist/js', 'dist/img']);
+    return del(['dist/*.html','dist/css', 'dist/js', 'dist/*.js', 'dist/*.json', 'dist/img']);
   });
   
 // Default task

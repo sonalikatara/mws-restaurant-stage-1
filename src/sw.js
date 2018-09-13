@@ -1,9 +1,10 @@
 
-const CACHE_NAME = 'mws-stage2-cache-v4';
+const CACHE_NAME = 'mws-stage2-cache-v5';
 const urlsToCache = [
   '/',
   'index.html',
   'restaurant.html',
+  'manifest.json',
   '/css/styles.css',
   '/js/main.js',
   '/js/dbhelper.js',

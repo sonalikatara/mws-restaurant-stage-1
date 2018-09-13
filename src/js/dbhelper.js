@@ -9,7 +9,7 @@ if (!('indexedDB' in window)) { //check for support
  console.log('This browser doesn\'t support IndexedDB');
 } else {
  console.log('This browser supports IndexedDB');
-  dbPromise = idb.open('mws-restaurant-store', 1, upgradeDb => {
+  dbPromise = idb.open('mws-restaurant-store-1', 1, upgradeDb => {
    console.log('Opened IndexedDB called mws-restaurant-store');
    switch (upgradeDb.oldVersion) {
      case 0:
