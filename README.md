@@ -10,7 +10,7 @@ I used IndexedDB to cache JSON responses in key : value format
 
 ![Indexed DB](./screenshots/indexdb.png)
 
-Also optimized the file using gulp. 
+Also optimized the file using gulp. The optimized code is stored in the **dist** folder. 
 
 ![Lighthouse results](./screenshots/lighthouse.png)
 
