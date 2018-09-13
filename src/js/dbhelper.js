@@ -2,21 +2,6 @@
  * Create an IDB
  * */
 //check for support
-/*
-if (!('indexedDB' in window)) {
-  console.log('This browser doesn\'t support IndexedDB');
-} else {
-  var dbPromise = idb.open('mws-db0', 0, function(upgradeDb) {
-    switch (upgradeDb.oldVersion) {
-      case 0:
-        upgradeDb.createObjectStore('restaurants', {keyPath: 'id'});
-      case 1:
-        var reviewStore = upgradeDb.transaction.objectStore('review');
-        revoewStore.createIndex('id', 'id'); 
-    }
-  });
-}
-*/
 
 //import idb from "idb"; 
 
@@ -28,10 +13,10 @@ if (!('indexedDB' in window)) { //check for support
    console.log('Opened IndexedDB called mws-restaurant-store');
    switch (upgradeDb.oldVersion) {
      case 0:
-     // upgradeDb.createObjectStore('restaurants)
+       upgradeDb.createObjectStore('restaurants')
      case 1:
        upgradeDb.createObjectStore('restaurants', {keyPath: 'id'})
-       console.log("creates a new table called restaurants")
+      // console.log("creates a new table called restaurants")
    }
  });
 }
@@ -48,8 +33,7 @@ class DBHelper {
    */
   static get DATABASE_URL() {
     const port = 1337 // Change this to your server port
-    //console.log("fetching data");
-    return `http://localhost:${port}/restaurants`;//http://localhost:1337/restaurants
+    return `http://localhost:${port}/restaurants`;
   }
 
   /**
@@ -64,11 +48,11 @@ class DBHelper {
        // add data to indexedDB
        dbPromise.then(db => {
         let tx = db.transaction('restaurants', 'readwrite')
-        console.log("open restuarants store")
+        //console.log("open restuarants store")
         let restaurantStore = tx.objectStore('restaurants')
         restaurants.forEach(restaurant => {
-          console.log("add data to restaurantstore")
-          restaurantStore.put(restaurant)
+        //  console.log("add data to restaurantstore")
+        restaurantStore.put(restaurant)
         })         
       }) // end dbPromise
         callback(null, restaurants);

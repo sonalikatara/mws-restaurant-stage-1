@@ -17,14 +17,16 @@ const gulp = require('gulp'),
     notify = require('gulp-notify'),
     cache = require('gulp-cache'),
     livereload = require('gulp-livereload'),
-    del = require('del');
+    del = require('del'),
+    runSequence = require('run-sequence');
 
 // html
-gulp.task('html', function () {
-    return gulp.src('src/*.html')
+gulp.task('html', function (done) {
+   gulp.src('src/*.html')
       .pipe(htmlmin({ collapseWhitespace: true }))
       .pipe(gulp.dest('dist'))
       .pipe(notify({ message: 'HTML task complete' }));
+      done();
   });    
 
 // Styles
@@ -37,9 +39,9 @@ gulp.task('styles', function() {
   
 // Scripts
 gulp.task('scripts', function() {
-    return gulp.src('src/js/*.js')   
+    return gulp.src('src/**/*.js')   
       .pipe(uglify())
-      .pipe(gulp.dest('dist/js'))
+      .pipe(gulp.dest('dist'))
       .pipe(notify({ message: 'Scripts task complete' }));
   });
   /*
@@ -47,7 +49,13 @@ gulp.task('scripts', function() {
       .pipe(gulp.dest('dist/js'))
       .pipe(rename({ suffix: '.min' }))
       */
-
+//manifest.json
+gulp.task('manifest', function() {
+  return gulp.src('src/manifest.json')   
+    .pipe(uglify())
+    .pipe(gulp.dest('dist'))
+    .pipe(notify({ message: 'Manifest task complete' }));
+});
 // Images
 gulp.task('images', function() {
     return gulp.src('src/img/**/*')
@@ -62,8 +70,9 @@ gulp.task('clean', function() {
   });
   
 // Default task
-gulp.task('default', ['clean'], function() {
-    gulp.start('html','styles', 'scripts', 'images');
+gulp.task('default', ['clean'], function(done) {
+    runSequence('html','styles', 'scripts', 'manifest', 'images');
+    done();
   });
 
 // Watch
@@ -74,6 +83,9 @@ gulp.task('watch', function() {
   
     // Watch .js files
     gulp.watch('src/js/*.js', ['scripts']);
+  
+    // Watch manifest.json
+    gulp.watch('src/manifest.json', ['manifest']);
   
     // Watch image files
     gulp.watch('src/img/**/*', ['images']);
