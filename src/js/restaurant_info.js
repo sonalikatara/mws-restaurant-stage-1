@@ -83,6 +83,9 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
 
+  const lnkReview = document.getElementById('lnkReview');
+  lnkReview.href = `./reviews.html?id=${restaurant.id}`;
+
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
