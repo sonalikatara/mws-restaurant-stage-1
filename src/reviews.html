@@ -45,11 +45,11 @@
             <legend>Share Review</legend>
           <p>
             <label for="inpName">Name</label><br>
-            <input type="text" id="inpName" placeholder="Enter your name " maxlength="20" />
+            <input type="text" id="inpName" name="name" placeholder="Enter your name " maxlength="20" />
           </p>
           <p>
-            <label for="inpRating">Rating</label><br>
-            <select name="cars" size="6">
+            <label for="inpRating">Select your rating</label><br>
+            <select id="rating" name="rating" size="6">
                     <option value="-1">-1</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -59,8 +59,8 @@
             </select>
           </p>
           <p>
-            <label for="inpReview">Review : No more than 100 characters</label><br>
-            <textarea id="inpReview" maxlength="100" rows="6" cols="70"></textarea>       
+            <label for="inpComment">Review : No more than 100 characters</label><br>
+            <textarea id="inpComment" name="comment" maxlength="100" rows="6" cols="70" placeholder="Your review helps others learn about local restaurats."></textarea>       
           </p>
             <input type="submit" value="Post Review">
          </fieldset>   
