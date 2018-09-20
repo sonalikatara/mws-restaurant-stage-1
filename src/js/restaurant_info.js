@@ -82,7 +82,7 @@ fetchRestaurantFromURL = (callback) => {
 fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
-
+  console.log(restaurant);
   const lnkReview = document.getElementById('lnkReview');
   lnkReview.href = `./reviews.html?id=${restaurant.id}`;
 
@@ -103,6 +103,21 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
 
+  /* is Favorite */
+  const favBotton = document.getElementById("favButton");
+  favBotton.style.backgroundColor = 'black';
+  favBotton.style.color = restaurant.is_favorite?'red':'white';
+  favBotton.addEventListener('click', event =>{
+     event.preventDefault();
+    const id = getParameterByName('id');
+    let newIsFav;
+    newIsFav=(favBotton.style.color==='red')?false:true
+   fetch(`http://localhost:1337/restaurants/${id}/?is_favorite=${newIsFav}`,{
+      method: 'PUT'
+    });
+    favBotton.style.color =  newIsFav?'red':'white';
+   }); 
+   /* end is Favorite */
   // fill operating hours
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
@@ -186,6 +201,7 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
   li.innerHTML = restaurant.name;
   breadcrumb.appendChild(li);
 }
+
 
 /**
  * Get a parameter by name from page URL.

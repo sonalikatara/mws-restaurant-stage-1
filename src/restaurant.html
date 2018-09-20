@@ -10,9 +10,9 @@
   <!-- Main CSS file -->
   <link rel="stylesheet" href="css/styles.css" type="text/css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ==" crossorigin=""/>
-  <title>Restaurant Info</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+   <title>Restaurant Info</title>
 </head>
-
 <body class="inside">
   <!-- Beginning header -->
   <header>
@@ -26,7 +26,6 @@
         <li><a href="./index.html">Home</a></li>
       </ul>
     </nav>
-   
     <!-- End breadcrumb -->
     <!-- End nav -->
   </header>
@@ -36,10 +35,10 @@
   <main id="maincontent">
     <!-- Beginning restaurant -->
     <section id="restaurant-container">
-      <h2 id="restaurant-name"></h2>
-      <div>
+      <h2 > <span id="restaurant-name"></span> <i id="favButton" class="fas fa-heart"> </i> </h2>       
+      <p>
         Rating <a id="lnkReview">Write a Review</a> 
-      </div>
+      </p>
       <img id="restaurant-img">
       <p id="restaurant-cuisine"></p>
       <p id="restaurant-address" aria-labelledby="restaurant-address-label"></p>    

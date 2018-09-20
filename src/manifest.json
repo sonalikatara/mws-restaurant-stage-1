@@ -2,15 +2,15 @@
 "short_name": "Restaurants",
   "name": "Udacity Restaurant Reviews Project for MWS ND",
   "icons": [
-    { "src": "img/appicon.svg", 
+    { "src": "./img/appicon.svg", 
       "sizes": "72x72 96x96 128x128 192x192 256x256 512x512",
-        "type": "image/svg"
+      "type": "image/png"
     }
   ],
 
-  "start_url": "/",
+  "start_url": "./",
   "background_color": "#f3f3f3",
   "display": "standalone",
-  "scope": "/",
+  "scope": "./",
   "theme_color": "#0c1f58"
 }
