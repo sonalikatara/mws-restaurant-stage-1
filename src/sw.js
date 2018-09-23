@@ -1,14 +1,16 @@
 
-const CACHE_NAME = 'mws-stage2-cache-v5';
+const CACHE_NAME = 'mws-stage2-cache-v6';
 const urlsToCache = [
   './',
   'index.html',
   'restaurant.html',
+  'review.html',
   'manifest.json',
   './css/styles.css',
   './js/main.js',
   './js/dbhelper.js',
   './js/restaurant_info.js',
+  './js.restaurant_review.js',
   './img/1_large.jpg',
   './img/1_medium.jpg',
   './img/2_large.jpg',
@@ -80,6 +82,7 @@ self.addEventListener('fetch', function(event) {
     );
   });
   */
+
  self.addEventListener('fetch', function(event) {
    console.log("in sw fetch");
   event.respondWith(

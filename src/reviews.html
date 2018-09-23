@@ -40,7 +40,7 @@
     <!-- Beginning reviews -->
     <section id="reviews-container">
       <!-- Add a new Review Form-->
-      <form role="form" id="reviewForm" name="reviewForm">
+      <form enctype="multipart/form-data" method="post" role="form" id="reviewForm" name="reviewForm">
         <fieldset>
             <legend>Share Review</legend>
           <p>
@@ -60,9 +60,9 @@
           </p>
           <p>
             <label for="inpComment">Review : No more than 100 characters</label><br>
-            <textarea id="inpComment" name="comment" maxlength="100" rows="6" cols="70" placeholder="Your review helps others learn about local restaurats."></textarea>       
+            <textarea id="inpComment" name="comments" maxlength="100" rows="6" cols="70" placeholder="Your review helps others learn about local restaurats."></textarea>       
           </p>
-            <input type="submit" value="Post Review">
+            <input id="btnPostReview" type="submit" value="Post Review">
          </fieldset>   
       </form>
       <!-- End of Review Form -->

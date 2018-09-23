@@ -46,6 +46,25 @@ fetchRestaurantFromURL = (callback) => {
     const name = document.getElementById('restaurant-name');
     name.innerHTML = restaurant.name;
     console.log(restaurant);
+
+    /* save formData */
+    let form = document.forms.namedItem("reviewForm");
+    form.addEventListener('submit', event => {
+      
+      const id = getParameterByName('id'),
+            oData = new FormData(form);
+
+      console.log(restaurant.id + " oData : "+ oData.get('name'))
+      fetch(`http://localhost:1337/reviews/${restaurant.id}`,{
+        method: 'PUT',
+        body: oData
+      }).then(response => response.json())
+      .catch(error => console.error('Error:', error))
+      .then(response => console.log('Success:', JSON.stringify(response)));
+
+      event.preventDefault();
+    })    
+    /* end save formData */
   }
 
 /**

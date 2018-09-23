@@ -9,14 +9,15 @@ if (!('indexedDB' in window)) { //check for support
  console.log('This browser doesn\'t support IndexedDB');
 } else {
  console.log('This browser supports IndexedDB');
-  dbPromise = idb.open('mws-restaurant-store-2', 1, upgradeDb => {
+  dbPromise = idb.open('mws-restaurant-store-2', 2, upgradeDb => {
    console.log('Opened IndexedDB called mws-restaurant-store');
    switch (upgradeDb.oldVersion) {
      case 0:
-       //upgradeDb.createObjectStore('restaurants')
+     upgradeDb.createObjectStore('restaurants', {keyPath: 'id'})
+     // console.log("creates a new table called restaurants")
      case 1:
-       upgradeDb.createObjectStore('restaurants', {keyPath: 'id'})
-      // console.log("creates a new table called restaurants")
+     const reviewsStore = upgradeDb.createObjectStore("reviews", {keyPath: "id"});
+     reviewsStore.createIndex("restaurant_id", "restaurant_id");
    }
  });
 }
@@ -36,11 +37,15 @@ class DBHelper {
     return `http://localhost:${port}/restaurants`;
   }
 
+  static get DATABASE_REVIEWS_URL() {
+    const port = 1337 // Change this to your server port
+    return `http://localhost:${port}/reviews`;
+  }
+
   /**
    * Fetch all restaurants.
    */
   static fetchRestaurants(callback) {
-  
     fetch(DBHelper.DATABASE_URL)
       .then(function (res) {
         return res.json();
@@ -74,10 +79,24 @@ class DBHelper {
         if (restaurant) { // Got the restaurant
           callback(null, restaurant);
         } else { // Restaurant does not exist in the database
-          callback('Restaurant does not exist', null);
+          callback('Restaurant' + id + ' does not exist', null);
         }
       }
     });
+  }
+
+  /**
+   * Fetch reviews of a restaurant
+   */
+  static fetchRestaurantReviewsById(id, callback){
+    const fetchURL = DBHelper.DATABASE_REVIEWS_URL + "/?restaurant_id=" + id;
+    fetch(fetchURL,{method: 'GET'}).then(response => {
+     return response.json()
+    }).then(reviews=>{
+      callback(null, reviews)
+    }).catch(error => {
+      callback('Restaurant does not exist', null)
+    })
   }
 
   /**

@@ -1,4 +1,5 @@
 let restaurant;
+let reviews;
 var newMap;
 
 /**
@@ -108,7 +109,7 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   favBotton.style.backgroundColor = 'black';
   favBotton.style.color = restaurant.is_favorite?'red':'white';
   favBotton.addEventListener('click', event =>{
-     event.preventDefault();
+    event.preventDefault();
     const id = getParameterByName('id');
     let newIsFav;
     newIsFav=(favBotton.style.color==='red')?false:true
@@ -149,23 +150,65 @@ fillRestaurantHoursHTML = (operatingHours = self.restaurant.operating_hours) => 
 /**
  * Create all reviews HTML and add them to the webpage.
  */
-fillReviewsHTML = (reviews = self.restaurant.reviews) => {
+fillReviewsHTML = (error, callback) => {
+  //console.log("in get reviews restaurantinfo")
+  if (self.reviews) { // restaurant reviews already fetched!
+    callback(null, self.reviews)
+    return;
+  }
+  const id = getParameterByName('id');
+
+  if (!id) { // no id found in URL
+    error = 'No restaurant id in URL'
+    callback(error, null);
+  } else {
+/**
+ * 
+ *  DBHelper.fetchRestaurants((error, restaurants) => {
+      if (error) {
+        callback(error, null);
+      } else {
+        const restaurant = restaurants.find(r => r.id == id);
+        if (restaurant) { // Got the restaurant
+          callback(null, restaurant);
+        } else { // Restaurant does not exist in the database
+          callback('Restaurant does not exist', null);
+        }
+      }
+    });
+ */
+
+  //console.log("pulled reviews"+ reviews)
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';
   container.appendChild(title);
 
-  if (!reviews) {
-    const noReviews = document.createElement('p');
-    noReviews.innerHTML = 'No reviews yet!';
-    container.appendChild(noReviews);
-    return;
-  }
-  const ul = document.getElementById('reviews-list');
-  reviews.forEach(review => {
-    ul.appendChild(createReviewHTML(review));
+
+  DBHelper.fetchRestaurantReviewsById(id, (error,reviews)=>{
+    if (error) {
+      console.error(error);
+    } else {
+    if (!reviews || reviews.length===0) {
+      const noReviews = document.createElement('p');
+      noReviews.innerHTML = 'No reviews yet!';
+      container.appendChild(noReviews);
+      return;
+    } else{
+      self.reviews = reviews
+      const ul = document.getElementById('reviews-list');
+      console.log("reviews"+JSON.stringify(reviews))
+      reviews.forEach(review => {
+        ul.appendChild(createReviewHTML(review));
+      });
+      container.appendChild(ul);
+    }
+
+    }
+   
+   
   });
-  container.appendChild(ul);
+}
 }
 
 /**
@@ -178,7 +221,7 @@ createReviewHTML = (review) => {
   li.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  date.innerHTML = new Date(review.updatedAt);
   li.appendChild(date);
 
   const rating = document.createElement('p');
