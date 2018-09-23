@@ -197,7 +197,7 @@ fillReviewsHTML = (error, callback) => {
     } else{
       self.reviews = reviews
       const ul = document.getElementById('reviews-list');
-      console.log("reviews"+JSON.stringify(reviews))
+      //console.log("reviews"+JSON.stringify(reviews))
       reviews.forEach(review => {
         ul.appendChild(createReviewHTML(review));
       });
