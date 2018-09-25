@@ -3,7 +3,7 @@
 
 html{overflow-x: hidden;}
 
-body,td,th,p{
+body,td,th,p, input, textarea, option{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	color: #000000;
@@ -16,7 +16,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
-ul, li {
+ul, li{
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10pt;
 	color: #000;
@@ -327,4 +327,17 @@ nav h1 a {
   margin: 0;
   width: 1px;
   height: 1px;
+}
+
+#btnPostReview{
+   background-color: #a85900;
+  border-bottom: 3px solid #eee;
+  color: #fff;
+  display: inline-block;
+  font-size: 12pt;
+  margin: 15px 0 0;
+  padding: 8px 30px 10px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
 }

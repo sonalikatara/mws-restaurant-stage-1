@@ -1,6 +1,7 @@
 let restaurant;
+let isOnline;
 /**
- * Initialize map as soon as the page is loaded.
+ * Initialize restaurant details  as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {  
   initReview();
@@ -8,13 +9,21 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 
 initReview = ()=>{
-    fetchRestaurantFromURL((error, restaurant) => {
-        if (error) { // Got an error!
-          console.error(error);
-        } else {
-          fillBreadcrumb();
-        }
-    });
+  isOnline = window.navigator.onLine;
+  console.log(isOnline);
+
+  window.addEventListener("offline", function(){
+   // alert("Network is offline");
+    isOnline = false;
+  }, false);
+
+  fetchRestaurantFromURL((error, restaurant) => {
+      if (error) { // Got an error!
+        console.error(error);
+      } else {
+        fillBreadcrumb();
+      }
+  });
 } 
 
 /**
@@ -45,24 +54,52 @@ fetchRestaurantFromURL = (callback) => {
   fillRestaurantHTML = (restaurant = self.restaurant) => {
     const name = document.getElementById('restaurant-name');
     name.innerHTML = restaurant.name;
-    console.log(restaurant);
+   // console.log(restaurant);
 
     /* save formData */
     let form = document.forms.namedItem("reviewForm");
     form.addEventListener('submit', event => {
-      
+      event.preventDefault();
       const id = getParameterByName('id'),
             oData = new FormData(form);
+      oData.append("restaurant_id", restaurant.id);
+     // console.log(restaurant.id + " oData : "+ oData.get('name') + " comments : "  + oData.get('restaurant_id'))
+      if (isOnline){
+       // console.log("online")
+        fetch(`http://localhost:1337/reviews/`,{
+          method: 'POST',
+          body: oData
+        }).then(response => response.json())
+        .then(response => window.location.href =`./restaurant.html?id=${restaurant.id}`)
+        .catch(error => console.error('Error:', error))
+       
+        //.then(response => console.log('Success:', JSON.stringify(response)));
+      } else {
+       // console.log("offline")
+      //  console.log(restaurant.id + " oData : "+ oData.get('name') + " comments : "  + oData.get('comments'))
 
-      console.log(restaurant.id + " oData : "+ oData.get('name'))
-      fetch(`http://localhost:1337/reviews/${restaurant.id}`,{
-        method: 'PUT',
-        body: oData
-      }).then(response => response.json())
-      .catch(error => console.error('Error:', error))
-      .then(response => console.log('Success:', JSON.stringify(response)));
-
-      event.preventDefault();
+        let newReview = {
+          restaurant_id : oData.get('restaurant_id'),
+          name : oData.get('name'),
+          rating : oData.get('rating'),
+          comments : oData.get('comments')
+        };
+        
+        idb.open('reviews', 1, function(upgradeDb) {
+          upgradeDb.createObjectStore('outbox', { autoIncrement : true, keyPath: 'id' });
+        }).then(db => {
+          let tx = db.transaction('outbox', 'readwrite');
+          let reviewStore =  tx.objectStore('outbox');
+           console.log("add data to restaurantstore" + newReview);
+          reviewStore.put(newReview);      
+        }).then(() => {
+          window.location.href =`./restaurant.html?id=${newReview.restaurant_id}`
+         // console.log('Your new review has been stored locally and will be sent to the server when network connection returns');
+        }).catch(error => {
+          console.error(error);
+        });
+      }
+     
     })    
     /* end save formData */
   }
@@ -79,7 +116,6 @@ fillBreadcrumb = (restaurant=self.restaurant) => {
     li.appendChild(a);
     breadcrumb.appendChild(li);
 }
-  
 
 /**
  * Get a parameter by name from page URL.

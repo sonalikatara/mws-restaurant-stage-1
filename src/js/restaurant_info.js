@@ -1,14 +1,70 @@
 let restaurant;
 let reviews;
 var newMap;
+let store;
 
 /**
  * Initialize map as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {  
+  initData();
   initMap();
 });
 
+initData = () =>{
+/**
+ * Look for offline reviews in the indexed db and push them to the server
+ */
+store = {
+  db: null,
+ 
+  init: () => {
+    if (store.db) { return Promise.resolve(store.db); }
+    return idb.open('reviews', 1, function(upgradeDb) {
+      upgradeDb.createObjectStore('outbox', { autoIncrement : true, keyPath: 'id' });
+    }).then(function(db) {
+      return store.db = db;
+    });
+  },
+ 
+  outbox: mode => {
+    return store.init().then(function(db) {
+      return db.transaction('outbox', mode).objectStore('outbox');
+    })
+  }
+}
+
+storeOfflineData = () => {
+  store.outbox('readonly').then(outbox => {
+    return outbox.getAll();
+  }).then(function (reviews) {
+    return Promise.all(reviews.map(review =>{
+      return fetch('http://localhost:1337/reviews/', {
+        method: 'POST',
+        body: JSON.stringify(review)
+      }).then(response => {
+        return response.json();
+      }).then(data => {
+       // if (data.result === 'success') {
+          return store.outbox('readwrite').then(outbox => {
+           // console.log("delete reviews from idb "+ review.id)
+            return outbox.delete(review.id);
+          });
+        //}
+      })
+    }).then(
+      window.location.reload()
+    ).catch(error => { console.error("error while saving reviews data from idb" + error); })
+    )
+  })
+}
+
+window.addEventListener('online',function(){
+  console.log(" window : The app is running online")
+  storeOfflineData();
+}, false);
+
+}
 /**
  * Initialize leaflet map
  */
@@ -83,7 +139,7 @@ fetchRestaurantFromURL = (callback) => {
 fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
-  console.log(restaurant);
+  //console.log(restaurant);
   const lnkReview = document.getElementById('lnkReview');
   lnkReview.href = `./reviews.html?id=${restaurant.id}`;
 
@@ -162,23 +218,6 @@ fillReviewsHTML = (error, callback) => {
     error = 'No restaurant id in URL'
     callback(error, null);
   } else {
-/**
- * 
- *  DBHelper.fetchRestaurants((error, restaurants) => {
-      if (error) {
-        callback(error, null);
-      } else {
-        const restaurant = restaurants.find(r => r.id == id);
-        if (restaurant) { // Got the restaurant
-          callback(null, restaurant);
-        } else { // Restaurant does not exist in the database
-          callback('Restaurant does not exist', null);
-        }
-      }
-    });
- */
-
-  //console.log("pulled reviews"+ reviews)
   const container = document.getElementById('reviews-container');
   const title = document.createElement('h3');
   title.innerHTML = 'Reviews';

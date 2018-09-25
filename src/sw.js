@@ -1,56 +1,52 @@
+const CACHE_NAME = 'mws-stage2-cache-v8';
 
-const CACHE_NAME = 'mws-stage2-cache-v6';
 const urlsToCache = [
-  './',
+  '/',
   'index.html',
   'restaurant.html',
-  'review.html',
+  'reviews.html',
   'manifest.json',
-  './css/styles.css',
-  './js/main.js',
-  './js/dbhelper.js',
-  './js/restaurant_info.js',
-  './js.restaurant_review.js',
-  './img/1_large.jpg',
-  './img/1_medium.jpg',
-  './img/2_large.jpg',
-  './img/2_medium.jpg',
-  './img/3_large.jpg',
-  './img/3_medium.jpg',
-  './img/4_large.jpg',
-  './img/4_medium.jpg',
-  './img/5_large.jpg',
-  './img/5_medium.jpg',
-  './img/6_large.jpg',
-  './img/6_medium.jpg',
-  './img/7_large.jpg',
-  './img/7_medium.jpg',
-  './img/8_large.jpg',
-  './img/8_medium.jpg',
-  './img/9_large.jpg',
-  './img/9_medium.jpg',
-  './img/10_large.jpg',
-  './img/10_medium.jpg',
-  './img/restaurantLong/1_large.jpg',
-  './img/restaurantLong/1_medium.jpg',
-  './img/restaurantLong/2_large.jpg',
-  './img/restaurantLong/2_medium.jpg',
-  './img/restaurantLong/3_large.jpg',
-  './img/restaurantLong/3_medium.jpg',
-  './img/restaurantLong/4_large.jpg',
-  './img/restaurantLong/4_medium.jpg',
-  './img/restaurantLong/5_large.jpg',
-  './img/restaurantLong/5_medium.jpg',
-  './img/restaurantLong/6_large.jpg',
-  './img/restaurantLong/6_medium.jpg',
-  './img/restaurantLong/7_large.jpg',
-  './img/restaurantLong/7_medium.jpg',
-  './img/restaurantLong/8_large.jpg',
-  './img/restaurantLong/8_medium.jpg',
-  './img/restaurantLong/9_large.jpg',
-  './img/restaurantLong/9_medium.jpg',
-  './img/restaurantLong/10_large.jpg',
-  './img/restaurantLong/10_medium.jpg',
+  'css/styles.css',
+  'js/main.js',
+  'js/dbhelper.js',
+  'js/restaurant_info.js',
+  'js/restaurant_review.js',
+  'img/1_large.jpg',
+  'img/1_medium.jpg',
+  'img/2_large.jpg',
+  'img/2_medium.jpg',
+  'img/3_large.jpg',
+  'img/3_medium.jpg',
+  'img/4_large.jpg',
+  'img/4_medium.jpg',
+  'img/5_large.jpg',
+  'img/5_medium.jpg',
+  'img/6_large.jpg',
+  'img/6_medium.jpg',
+  'img/7_large.jpg',
+  'img/7_medium.jpg',
+  'img/8_large.jpg',
+  'img/8_medium.jpg',
+  'img/9_large.jpg',
+  'img/9_medium.jpg',
+  'img/restaurantLong/1_large.jpg',
+  'img/restaurantLong/1_medium.jpg',
+  'img/restaurantLong/2_large.jpg',
+  'img/restaurantLong/2_medium.jpg',
+  'img/restaurantLong/3_large.jpg',
+  'img/restaurantLong/3_medium.jpg',
+  'img/restaurantLong/4_large.jpg',
+  'img/restaurantLong/4_medium.jpg',
+  'img/restaurantLong/5_large.jpg',
+  'img/restaurantLong/5_medium.jpg',
+  'img/restaurantLong/6_large.jpg',
+  'img/restaurantLong/6_medium.jpg',
+  'img/restaurantLong/7_large.jpg',
+  'img/restaurantLong/7_medium.jpg',
+  'img/restaurantLong/8_large.jpg',
+  'img/restaurantLong/8_medium.jpg',
+  'img/restaurantLong/9_large.jpg',
+  'img/restaurantLong/9_medium.jpg',
 ];
 
 // INSTALL SERVICE WORKER
@@ -84,12 +80,13 @@ self.addEventListener('fetch', function(event) {
   */
 
  self.addEventListener('fetch', function(event) {
-   console.log("in sw fetch");
+ //  console.log("in sw fetch");
   event.respondWith(
     fetch(event.request).then(function (response) {
       return caches.open(CACHE_NAME).then(function (cache) {
-        console.log("store data in cache");
+       // console.log("store data in cache");
         cache.put(event.request, response.clone());
+       // console.log("put data in cache");
         return response;
         });
       }).catch(function() { // found cached data
@@ -99,9 +96,7 @@ self.addEventListener('fetch', function(event) {
   );
 });
 
-
-  // Update a service worker
-
+// Update a service worker
   self.addEventListener('activate', function(event) {
     event.waitUntil(
       caches.keys().then(function(cacheNames) {
